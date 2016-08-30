@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <title>My Angular App!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <!-- <script src="bower_components/angular/angular.min.js"></script> -->
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="app.js"></script>
+  </head>
+  <body ng-app="app">
+
+         <div ng-controller="CustomerController">
+          <div ng-repeat="customer in customers">
+              <button class="btn btn-default" ng-click="open(customer)">Edit {{ customer.name }}</button> <pre>{{customer.details}}</pre><br />
+
+                  <!--MODAL WINDOW-->
+                  <script type="text/ng-template" id="myModalContent.html">
+                      <div class="modal-header">
+                          <h3>The Customer Name is: {{ customer.name }}</h3>
+                      </div>
+                      <div class="model-body">
+                              This is where the Customer Details Goes<br />
+                          <input type="text" ng-init="customer.details" ng-model="customer.details"/>
+                      </div>
+                      <div class="model-footer">
+  <button class="btn btn-primary" ng-click="ok(customer)">Update Customer</button>
+                      </div>
+                  </script>
+
+          </div>
+          </div>
+
+
+  </body>
+</html>
