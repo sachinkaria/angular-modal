@@ -1,34 +1,39 @@
-<html>
+<!doctype html>
+<html ng-app="ui.bootstrap.demo">
   <head>
-    <title>My Angular App!</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    <!-- <script src="bower_components/angular/angular.min.js"></script> -->
-    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="app.js"></script>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   </head>
-  <body ng-app="app">
+  <body>
 
-         <div ng-controller="CustomerController">
-          <div ng-repeat="customer in customers">
-              <button class="btn btn-default" ng-click="open(customer)">Edit {{ customer.name }}</button> <pre>{{customer.details}}</pre><br />
+<div ng-controller="ModalDemoCtrl">
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">I'm a modal!</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <li ng-repeat="item in items">
+                    <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ selected.item }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
 
-                  <!--MODAL WINDOW-->
-                  <script type="text/ng-template" id="myModalContent.html">
-                      <div class="modal-header">
-                          <h3>The Customer Name is: {{ customer.name }}</h3>
-                      </div>
-                      <div class="model-body">
-                              This is where the Customer Details Goes<br />
-                          <input type="text" ng-init="customer.details" ng-model="customer.details"/>
-                      </div>
-                      <div class="model-footer">
-  <button class="btn btn-primary" ng-click="ok(customer)">Update Customer</button>
-                      </div>
-                  </script>
-
-          </div>
-          </div>
-
-
+    <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
+    <button type="button" class="btn btn-default" ng-click="open('lg')">Large modal</button>
+    <button type="button" class="btn btn-default" ng-click="open('sm')">Small modal</button>
+    <button type="button" class="btn btn-default" ng-click="toggleAnimation()">Toggle Animation ({{ animationsEnabled }})</button>
+    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+</div>
   </body>
 </html>

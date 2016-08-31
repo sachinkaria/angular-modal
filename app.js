@@ -1,45 +1,52 @@
-var app = angular.module('app', ['ui.bootstrap']);
+angular.module('ui.bootstrap.demo', ['ngAnimate', 'ui.bootstrap']);
+angular.module('ui.bootstrap.demo').controller('ModalDemoCtrl',['$scope', '$uibModal', '$log', function ($scope, $uibModal, $log) {
 
-app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, customer)
-{
-  $scope.customer = customer;
-  $scope.ok = function (customer) {
-    $modalInstance.close($scope.customer);
-  };
+  $scope.items = ['item1', 'item2', 'item3'];
 
-});
+  $scope.animationsEnabled = true;
 
-app.controller('CustomerController', function($scope, $timeout, $modal, $log) {
+  $scope.open = function (size) {
 
-  $scope.customers = [
-    {
-      name: 'Ricky',
-      details: 'Some Details for Ricky',
-    },
-    {
-      name: 'Dicky',
-      details: 'Some Dicky Details',
-    },
-    {
-      name: 'Nicky',
-      details: 'Some Nicky Details',
-    }
-  ];
-
-  // MODAL WINDOW
-  $scope.open = function (_customer) {
-
-    var modalInstance = $modal.open({
-      controller: "ModalInstanceCtrl",
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
       templateUrl: 'myModalContent.html',
+      controller: 'ModalInstanceCtrl',
+      size: size,
       resolve: {
-        customer: function()
-        {
-          return _customer;
+        items: function () {
+          return $scope.items;
         }
       }
     });
 
+    modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
   };
 
-});
+  $scope.toggleAnimation = function () {
+    $scope.animationsEnabled = !$scope.animationsEnabled;
+  };
+
+}]);
+
+// Please note that $modalInstance represents a modal window (instance) dependency.
+// It is not the same as the $uibModal service used above.
+
+angular.module('ui.bootstrap.demo').controller('ModalInstanceCtrl',['$scope','$uibModalInstance', function ($scope, $uibModalInstance) {
+
+  $scope.items = ['item1', 'item2', 'item3'];
+  $scope.selected = {
+    item: $scope.items[0]
+  };
+
+  $scope.ok = function () {
+    $uibModalInstance.close($scope.selected.item);
+  };
+
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+}]);
